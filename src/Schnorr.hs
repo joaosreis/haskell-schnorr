@@ -1,10 +1,12 @@
 module Schnorr (generateParameters,generateKeys,SecretKey,PublicKey,
-    Keys(Keys,sk,pk),SchnorrParameters(SchnorrParameters,p,q,beta,t)) where
+    Keys(Keys,sk,pk),SchnorrParameters(SchnorrParameters,p,q,beta,t),
+    Signature(Signature,k,signature)) where
 
     import Crypto.Number.Generate
     import Crypto.Number.Prime
     import Crypto.Number.ModArithmetic
     import Crypto.Number.Basic
+    import qualified Data.ByteString.Char8 as C
 
     type SecretKey = Integer
     type PublicKey = Integer
@@ -17,6 +19,9 @@ module Schnorr (generateParameters,generateKeys,SecretKey,PublicKey,
     } deriving (Eq,Show)
 
     data Keys = Keys { sk :: SecretKey, pk :: PublicKey } deriving (Eq,Show)
+
+    data Signature = Signature { k :: C.ByteString, signature :: C.ByteString }
+        deriving (Eq,Show)
 
     -- Find the primitive root of Z(P), with Q = (P-1)/r
     findPrimitiveRootModP :: Integer -> Integer -> Integer
